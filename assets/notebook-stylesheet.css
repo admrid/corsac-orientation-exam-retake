@@ -1,3 +1,16 @@
 body {
   background-color: gray;
 }
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+table td, table th {
+  border: 1px solid black;
+}
+
+table th {
+  background-color: #A9A9A9;
+}
