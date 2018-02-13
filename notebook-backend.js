@@ -143,6 +143,9 @@ app.post('/tickets', function (req, res) {
 });
 
 
+// DELETE ha lesz idom megcsinalom
+
+
 app.listen(PORT, function() {
   console.log(`The server is running & listening on ${PORT}`);
 });
