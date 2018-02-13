@@ -27,7 +27,7 @@ app.get('/users', function (req, res) {
   console.log('GET /users: ezt kapta a szerver:');
   console.log('req.method, req.url: ', req.method, req.url);
 
-  conn.query(`SELECT name FROM users;`, function(err, rows) {
+  conn.query(`SELECT * FROM users;`, function(err, rows) {
     if(err) {
       console.log(err.toString());
       res.satus(500).send('Database error');
@@ -37,6 +37,39 @@ app.get('/users', function (req, res) {
     res.json(rows);
     // console.log(rows);
   });
+});
+
+
+// GET /tickets
+app.get('/tickets', function (req, res) {
+  console.log('GET /tickets: ezt kapta a szerver:');
+  console.log('req.method, req.url, req.query: ', req.method, req.url, req.query);
+
+  if (req.url === '/tickets') {
+    console.log('if');
+    conn.query(`SELECT * FROM tickets;`, function(err, rows) {
+      if(err) {
+        console.log(err.toString());
+        res.satus(500).send('Database error');
+        return;
+      }
+      res.status(200);
+      res.json(rows);
+      // console.log(rows);
+    });
+  } else if (req.query.manufacturer === 'dell') {
+    console.log('else if manufacturer');
+    conn.query(`SELECT * FROM tickets WHERE manufacturer = "dell";`, function(err, rows) {
+      if(err) {
+        console.log(err.toString());
+        res.satus(500).send('Database error');
+        return;
+      }
+      res.status(200);
+      res.json(rows);
+      // console.log(rows);
+    });
+  }
 });
 
 
