@@ -187,5 +187,9 @@ Example query:
 ## 2) Question time
 
 ### a, What's the difference between Array.prototype.forEach and Array.prototype.map?
+for each iterates through all the items and for each item it runs whatever we want it to run.
+although map also iterates through all the items it changes/transforms those items and returns a list with those changed/transformed items.
 
 ### b, Write an example usage of the map and forEach function.
+- foreach: go trough all the items and for each say create a row in a table and fill those rows with the content of each item (say an array)
+- map: go trhough all the items in the list and transform them to say uppercase words from lowercase (and then give back the transformed items as a new list)
