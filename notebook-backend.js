@@ -57,6 +57,18 @@ app.get('/tickets', function (req, res) {
       res.json(rows);
       // console.log(rows);
     });
+  }else if (req.query.reporter && req.query.manufacturer) {
+    console.log('else if reporter && manufacturer');
+    conn.query(`SELECT * FROM tickets WHERE reporter = ? AND manufacturer = ?;`, [req.query.reporter, req.query.manufacturer], function(err, rows) {
+      if(err) {
+        console.log(err.toString());
+        res.satus(500).send('Database error');
+        return;
+      }
+      res.status(200);
+      res.json(rows);
+      // console.log(rows);
+    });
   } else if (req.query.manufacturer) {
     console.log('else if manufacturer');
     conn.query(`SELECT * FROM tickets WHERE manufacturer = ?;`, [req.query.manufacturer], function(err, rows) {
@@ -70,7 +82,7 @@ app.get('/tickets', function (req, res) {
       // console.log(rows);
     });
   } else if (req.query.reporter) {
-    console.log('else if manufacturer');
+    console.log('else if reporter');
     conn.query(`SELECT * FROM tickets WHERE reporter = ?;`, [req.query.reporter], function(err, rows) {
       if(err) {
         console.log(err.toString());
