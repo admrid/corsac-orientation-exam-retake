@@ -97,6 +97,51 @@ app.get('/tickets', function (req, res) {
 });
 
 
+// POST /tickets
+app.post('/tickets', function (req, res) {
+  console.log('POST /tickets: ezt kapta a szerver:', req.params);
+  console.log('req.method, req.url, req.query, (req.body:)', req.method, req.url, req.params);
+
+  let success = {"result": "success"};
+  let notValid = {"result": "not a valid ticket"};
+  let errr = {"result": "error"};
+
+  const ticket = req.body;
+  console.log('ticket:', ticket);
+
+  // VALIDATE & CREATE TICKET
+  function createTicket(ticket) {
+    if (ticket.reporter !== '' && ticket.manufacturer !== '' && ticket.serial_number !== '' && ticket.description !== '') {
+      conn.query(`INSERT INTO tickets (reporter, manufacturer, serial_number, description, reported_at) VALUES ('?', '?', '?', '?', '?');`
+      [ticket.reporter, ticket.manufacturer, ticket.serial_number, ticket.description, '2018-02-13'], function(err,rows) {
+        if(err) {
+          console.log(err.toString());
+          res.satus(500);
+          res.send('Database error');
+          return;
+        }
+        conn.query(`SELECT * FROM tickets ORDER BY id ASC LIMIT 1;`, function(err, rows) {
+          if(err) {
+            console.log(err.toString());
+            res.satus(500);
+            re.send('Database error');
+            return;
+          }
+          res.status(200);
+          res.json(rows);
+          // console.log(rows);
+        });
+      });
+    } else {
+      res.status(400);
+      res.json(notValid);
+    }
+  }
+
+  createTicket(ticket);
+
+});
+
 
 app.listen(PORT, function() {
   console.log(`The server is running & listening on ${PORT}`);
