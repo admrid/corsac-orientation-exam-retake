@@ -57,9 +57,9 @@ app.get('/tickets', function (req, res) {
       res.json(rows);
       // console.log(rows);
     });
-  } else if (req.query.manufacturer === 'dell') {
+  } else if (req.query.manufacturer) {
     console.log('else if manufacturer');
-    conn.query(`SELECT * FROM tickets WHERE manufacturer = "dell";`, function(err, rows) {
+    conn.query(`SELECT * FROM tickets WHERE manufacturer = ?;`, [req.query.manufacturer], function(err, rows) {
       if(err) {
         console.log(err.toString());
         res.satus(500).send('Database error');
@@ -69,7 +69,19 @@ app.get('/tickets', function (req, res) {
       res.json(rows);
       // console.log(rows);
     });
-  }
+  } else if (req.query.reporter) {
+    console.log('else if manufacturer');
+    conn.query(`SELECT * FROM tickets WHERE reporter = ?;`, [req.query.reporter], function(err, rows) {
+      if(err) {
+        console.log(err.toString());
+        res.satus(500).send('Database error');
+        return;
+      }
+      res.status(200);
+      res.json(rows);
+      // console.log(rows);
+    });
+  } 
 });
 
 
